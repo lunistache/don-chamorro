@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f3e6cc"/>
+  <g transform="translate(0,12)">
+    <ellipse cx="198" cy="203" rx="163" ry="57" fill="#d9a94f"/>
+    <ellipse cx="203" cy="191" rx="157" ry="54" fill="#f2cf7d"/>
+    <ellipse cx="203" cy="189" rx="146" ry="46" fill="#f7dc9a"/>
+    <g fill="#d9a94f" opacity=".7">
+      <ellipse cx="96" cy="196" rx="13" ry="6" transform="rotate(-12 96 196)"/>
+      <ellipse cx="300" cy="200" rx="14" ry="6" transform="rotate(14 300 200)"/>
+      <ellipse cx="200" cy="232" rx="16" ry="6"/>
+    </g>
+    <circle cx="125" cy="178" r="21" fill="#7f4220"/><circle cx="158" cy="166" r="25" fill="#a65a2a"/>
+    <circle cx="195" cy="160" r="27" fill="#8a4a22"/><circle cx="232" cy="163" r="26" fill="#b0652f"/>
+    <circle cx="265" cy="172" r="23" fill="#8a4a22"/><circle cx="292" cy="182" r="19" fill="#a65a2a"/>
+    <circle cx="145" cy="192" r="21" fill="#a65a2a"/><circle cx="180" cy="188" r="24" fill="#c27838"/>
+    <circle cx="215" cy="190" r="25" fill="#8a4a22"/><circle cx="248" cy="190" r="22" fill="#a65a2a"/>
+    <rect x="166" y="150" width="11" height="11" rx="2" fill="#fffaf0" transform="rotate(18 171 155)"/>
+    <rect x="244" y="168" width="10" height="10" rx="2" fill="#fffaf0" transform="rotate(-14 249 173)"/>
+    <rect x="208" y="196" width="10" height="10" rx="2" fill="#fffaf0" transform="rotate(-8 213 201)"/>
+    <rect x="210" y="146" width="12" height="12" rx="3" fill="#d7372b" transform="rotate(-20 216 152)"/>
+    <rect x="146" y="184" width="11" height="11" rx="3" fill="#d7372b" transform="rotate(8 151 189)"/>
+    <rect x="262" y="164" width="11" height="11" rx="3" fill="#d7372b" transform="rotate(15 267 169)"/>
+    <ellipse cx="200" cy="140" rx="9" ry="4.5" fill="#3f8a45" transform="rotate(-25 200 140)"/>
+    <ellipse cx="258" cy="150" rx="9" ry="4.5" fill="#3f8a45" transform="rotate(35 258 150)"/>
+    <ellipse cx="160" cy="146" rx="8" ry="4" fill="#2f6b3a" transform="rotate(25 160 146)"/>
+  </g>
+</svg>

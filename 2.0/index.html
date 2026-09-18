@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Don Chamorro · Pide en línea · Tacos de Chamorro en Querétaro</title>
+  <meta name="description" content="Pide en línea tus tacos de chamorro en Querétaro: para comer aquí, para llevar o a domicilio. Pagas en el local o con el repartidor. Confirmamos por WhatsApp.">
+  <meta property="og:title" content="Don Chamorro · Pide en línea">
+  <meta property="og:description" content="Arma tu pedido en 3 pasos y confirma por WhatsApp. Mercado de la Cruz, Centro.">
+  <meta property="og:type" content="restaurant">
+  <meta name="theme-color" content="#b3261e">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="order.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Don Chamorro",
+    "slogan": "Taco que cierra no es taco",
+    "servesCuisine": "Mexicana, Tacos",
+    "priceRange": "$",
+    "telephone": ["+52 442 312 3403", "+52 442 480 2400"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Garibaldi 73, Mercado de la Cruz",
+      "addressLocality": "Santiago de Querétaro",
+      "addressRegion": "Qro.",
+      "postalCode": "76000",
+      "addressCountry": "MX"
+    },
+    "sameAs": [
+      "https://www.instagram.com/donchamorroqro/",
+      "https://www.facebook.com/Don-Chamorro-217633508306447/"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header class="nav" id="top">
+    <a class="brand" href="#top" aria-label="Don Chamorro, inicio">
+      <span class="brand-mark">DC</span>
+      <span class="brand-name">Don Chamorro</span>
+    </a>
+    <nav class="nav-links nav-links-slim">
+      <button class="btn btn-sm btn-masa" data-open-cart type="button">
+        Mi pedido <span class="nav-cart-count" data-cart-count>0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- PORTADA DE LA TIENDA -->
+    <section class="store">
+      <div class="store-cover">
+        <img id="store-cover-img" src="" alt="" loading="eager">
+      </div>
+
+      <div class="container store-head">
+        <img class="store-logo" id="store-logo" src="" alt="Logo Don Chamorro">
+        <div class="store-title">
+          <h1 id="store-welcome">¡Bienvenidos a Don Chamorro!</h1>
+          <p class="store-lema" id="store-lema"></p>
+          <p class="store-desc" id="store-desc"></p>
+        </div>
+      </div>
+
+      <ul class="store-chips container" id="store-chips"></ul>
+    </section>
+
+    <!-- MENÚ -->
+    <section class="menu" id="menu">
+      <div class="container">
+        <nav class="cat-tabs" id="cat-tabs" aria-label="Categorías del menú"></nav>
+        <div id="catalog" class="catalog"></div>
+        <p class="fineprint">Precios en pesos mexicanos. El pago no se realiza en el sitio: pagas en el local o con el repartidor.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer footer-slim">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">Don Chamorro</p>
+        <p class="footer-slogan">Mercado de la Cruz · Garibaldi 73, Centro, Querétaro</p>
+        <p class="footer-slogan">Todos los días desde las 8:00 AM · <a href="tel:+524423123403">(442) 312 3403</a></p>
+      </div>
+      <div class="socials">
+        <a href="https://www.instagram.com/donchamorroqro/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 16.7 12 4.7 4.7 0 0 0 12 7.3Zm0 7.8A3.1 3.1 0 1 1 15.1 12 3.1 3.1 0 0 1 12 15.1Zm6-8a1.1 1.1 0 1 1-1.1-1.1A1.1 1.1 0 0 1 18 7.1ZM21.9 8.2a5.4 5.4 0 0 0-1.5-3.8 5.4 5.4 0 0 0-3.8-1.5c-1.5-.1-6-.1-7.5 0a5.4 5.4 0 0 0-3.8 1.5 5.4 5.4 0 0 0-1.5 3.8c-.1 1.5-.1 6 0 7.5a5.4 5.4 0 0 0 1.5 3.8 5.4 5.4 0 0 0 3.8 1.5c1.5.1 6 .1 7.5 0a5.4 5.4 0 0 0 3.8-1.5 5.4 5.4 0 0 0 1.5-3.8c.1-1.5.1-6 0-7.5Zm-2 9.1a3.1 3.1 0 0 1-1.7 1.7c-1.2.5-4 .4-5.3.4s-4.1.1-5.3-.4a3.1 3.1 0 0 1-1.7-1.7c-.5-1.2-.4-4-.4-5.3s-.1-4.1.4-5.3A3.1 3.1 0 0 1 5.6 5c1.2-.5 4-.4 5.3-.4s4.1-.1 5.3.4a3.1 3.1 0 0 1 1.7 1.7c.5 1.2.4 4 .4 5.3s.1 4.1-.4 5.3Z"/></svg>
+          @donchamorroqro
+        </a>
+        <a href="https://www.facebook.com/Don-Chamorro-217633508306447/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3A21 21 0 0 0 14.6 2C12.2 2 10.6 3.5 10.6 6.1v2.4H8V12h2.6v10H14V12h2.7l.4-3.5Z"/></svg>
+          Facebook
+        </a>
+      </div>
+      <p class="copy">© <span id="year"></span> Don Chamorro · Querétaro, México</p>
+    </div>
+  </footer>
+
+  <!-- Barra flotante del carrito -->
+  <button class="cart-bar" id="cart-bar" type="button" data-open-cart hidden>
+    <span class="cart-bar-count" data-cart-count>0</span>
+    <span class="cart-bar-label">Ver mi pedido</span>
+    <span class="cart-bar-total" data-cart-total>$0</span>
+  </button>
+
+  <!-- Modal producto -->
+  <div class="modal" id="product-modal" hidden>
+    <div class="modal-backdrop" data-close-product></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="product-title">
+      <header class="modal-head">
+        <h3 id="product-title">Producto</h3>
+        <button class="icon-btn" type="button" data-close-product aria-label="Cerrar">✕</button>
+      </header>
+      <div class="modal-body" id="product-body"></div>
+      <footer class="modal-foot">
+        <div class="qty" role="group" aria-label="Cantidad">
+          <button type="button" class="qty-btn" id="p-minus" aria-label="Quitar uno">−</button>
+          <span id="p-qty">1</span>
+          <button type="button" class="qty-btn" id="p-plus" aria-label="Agregar uno">+</button>
+        </div>
+        <button class="btn btn-red btn-block" type="button" id="p-add">Agregar · $0</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Checkout 3 pasos -->
+  <div class="modal" id="checkout" hidden>
+    <div class="modal-backdrop" data-close-checkout></div>
+    <div class="modal-panel modal-panel-lg" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <header class="modal-head">
+        <button class="icon-btn" type="button" id="co-back" aria-label="Regresar" hidden>←</button>
+        <h3 id="checkout-title">Mi pedido</h3>
+        <button class="icon-btn" type="button" data-close-checkout aria-label="Cerrar">✕</button>
+      </header>
+
+      <ol class="stepper" id="stepper">
+        <li data-step="1"><b>1</b> Productos</li>
+        <li data-step="2"><b>2</b> Entrega</li>
+        <li data-step="3"><b>3</b> Pago</li>
+      </ol>
+
+      <div class="modal-body">
+        <!-- PASO 1 -->
+        <section class="step" data-step="1">
+          <div id="cart-lines"></div>
+          <p class="empty-cart" id="empty-cart" hidden>Tu pedido está vacío. Agrega algo del menú 🌮</p>
+          <label class="field">
+            <span>Notas para la cocina <small>(opcional)</small></span>
+            <textarea id="order-note" rows="2" placeholder="Ej. sin cebolla, salsa aparte..."></textarea>
+          </label>
+          <div class="totals" id="totals-1"></div>
+        </section>
+
+        <!-- PASO 2 -->
+        <section class="step" data-step="2" hidden>
+          <p class="step-title">¿Cómo quieres tu pedido?</p>
+          <div class="choice-grid choice-grid-3" id="mode-grid">
+            <label class="choice">
+              <input type="radio" name="mode" value="local">
+              <span class="choice-box">
+                <span class="choice-ico" aria-hidden="true">🍽️</span>
+                <b>Comer aquí</b>
+                <small>En el puesto, servido en charola</small>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="mode" value="pickup">
+              <span class="choice-box">
+                <span class="choice-ico" aria-hidden="true">🥡</span>
+                <b>Para llevar</b>
+                <small>Pasas por él al Mercado de la Cruz</small>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="mode" value="delivery" checked>
+              <span class="choice-box">
+                <span class="choice-ico" aria-hidden="true">🛵</span>
+                <b>A domicilio</b>
+                <small>Te lo lleva nuestro repartidor</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="fields">
+            <label class="field">
+              <span>Nombre completo *</span>
+              <input type="text" id="f-name" autocomplete="name" placeholder="Tu nombre">
+            </label>
+            <label class="field">
+              <span id="phone-label">Teléfono / WhatsApp *</span>
+              <input type="tel" id="f-phone" autocomplete="tel" inputmode="tel" placeholder="442 123 4567">
+            </label>
+            <div class="delivery-only">
+              <label class="field">
+                <span>Calle y número *</span>
+                <input type="text" id="f-address" autocomplete="street-address" placeholder="Av. Universidad 123, int. 4">
+              </label>
+              <label class="field">
+                <span>Colonia *</span>
+                <input type="text" id="f-colonia" placeholder="Centro">
+              </label>
+              <label class="field">
+                <span>Referencias <small>(opcional)</small></span>
+                <input type="text" id="f-refs" placeholder="Portón verde, frente a la farmacia">
+              </label>
+            </div>
+            <label class="field">
+              <span id="when-label">¿Para cuándo?</span>
+              <select id="f-when">
+                <option value="Lo antes posible">Lo antes posible</option>
+                <option value="Programado">Para una hora en específico</option>
+              </select>
+            </label>
+            <label class="field" id="f-time-wrap" hidden>
+              <span>Hora deseada</span>
+              <input type="time" id="f-time">
+            </label>
+          </div>
+          <p class="form-error" id="err-2" hidden></p>
+        </section>
+
+        <!-- PASO 3 -->
+        <section class="step" data-step="3" hidden>
+          <p class="note-pay">El pago <strong>no se realiza en este sitio</strong>. Eliges cómo pagas y lo liquidas <span id="pay-where">con el repartidor</span>.</p>
+          <div class="choice-list" id="pay-list"></div>
+
+          <label class="field" id="cash-wrap" hidden>
+            <span>¿Con cuánto vas a pagar? <small>(para llevar tu cambio)</small></span>
+            <input type="number" id="f-cash" inputmode="numeric" min="0" step="1" placeholder="Ej. 500">
+            <small class="hint" id="change-hint"></small>
+          </label>
+
+          <div class="totals" id="totals-3"></div>
+          <p class="form-error" id="err-3" hidden></p>
+        </section>
+      </div>
+
+      <footer class="modal-foot modal-foot-nav">
+        <button class="btn btn-outline-light" type="button" id="co-prev" hidden>Regresar</button>
+        <button class="btn btn-red btn-block" type="button" id="co-next">Continuar</button>
+        <button class="btn btn-wa btn-block" type="button" id="co-send" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+          Enviar pedido por WhatsApp
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Confirmación -->
+  <div class="modal" id="done" hidden>
+    <div class="modal-backdrop" data-close-done></div>
+    <div class="modal-panel modal-panel-sm" role="dialog" aria-modal="true" aria-labelledby="done-title">
+      <div class="done-body">
+        <div class="done-check" aria-hidden="true">🌮</div>
+        <h3 id="done-title">¡Pedido enviado!</h3>
+        <p>Se abrió WhatsApp con el resumen de tu pedido. <strong>Envía el mensaje</strong> para que lo recibamos y te confirmemos el tiempo de entrega.</p>
+        <p class="muted small">¿No se abrió? <a id="done-link" href="#" target="_blank" rel="noopener">Abre WhatsApp aquí</a>.</p>
+        <button class="btn btn-red btn-block" type="button" data-close-done>Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="menu-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
