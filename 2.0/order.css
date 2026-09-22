@@ -94,24 +94,33 @@
 }
 .store-desc { color: var(--ink-soft); max-width: 62ch; margin: 0; }
 
-.store-chips {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 10px;
-  margin: 18px auto 0;
-  padding: 0 var(--gutter);
-}
-.store-chips li {
-  display: flex;
+.open-status {
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: var(--paper-2);
-  border: 1px solid var(--line);
+  gap: 8px;
+  margin: 0 0 .6em;
+  padding: 6px 14px;
   border-radius: 999px;
-  padding: 7px 14px;
+  border: 1px solid currentColor;
   font-size: .9rem;
   font-weight: 500;
+}
+.open-status b { font-weight: 700; }
+.open-status .dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.open-status.is-open   { color: var(--nopal);  background: #e6f2e4; }
+.open-status.is-soon   { color: #9a5b00;       background: #fdf0d2; }
+.open-status.is-closed { color: var(--chile);  background: #f9e1dc; }
+.open-status.is-open .dot { animation: pulse 1.8s ease-out infinite; }
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(47,107,58,.55); }
+  100% { box-shadow: 0 0 0 8px rgba(47,107,58,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .open-status.is-open .dot { animation: none; }
 }
 
 .menu { padding: 26px 0 70px; }

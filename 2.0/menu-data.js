@@ -6,16 +6,28 @@
 
 const CONFIG = {
   // Número que RECIBE los pedidos (formato internacional, sin + ni espacios)
-  // PRUEBA: número personal. Producción → "524424986900"
-  whatsapp: "33609424053",
+  whatsapp: "524461235742",
   negocio: "Don Chamorro",
   bienvenida: "¡Bienvenidos a Don Chamorro!",
   lema: "Taco que cierra no es taco",
   descripcion: "Los originales Chamorros de Querétaro. Chamorro de cerdo jugoso y doradito, servido en doble tortilla con cebolla, cilantro y pico de gallo.",
   direccionTienda: "Mercado de la Cruz · Garibaldi 73, Centro, Querétaro",
-  horario: "Todos los días desde las 8:00 AM",
+  horario: "Todos los días de 7:30 AM a 2:30 PM",
+
+  /* Horario para el aviso "Abierto / Cerrado" en vivo (hora de Querétaro).
+     Un rango por día, formato 24 h. null = cerrado ese día. */
+  zonaHoraria: "America/Mexico_City",
+  horarios: {
+    lunes:     ["07:30", "14:30"],
+    martes:    ["07:30", "14:30"],
+    miercoles: ["07:30", "14:30"],
+    jueves:    ["07:30", "14:30"],
+    viernes:   ["07:30", "14:30"],
+    sabado:    ["07:30", "14:30"],
+    domingo:   ["07:30", "14:30"]
+  },
   tiempoEntrega: "25-40 min",
-  telefono: "+524423123403",
+  telefono: "+524461235742",
   moneda: "$",
 
   /* Fotos: sustituye estos archivos por tus fotos reales (mismo nombre o

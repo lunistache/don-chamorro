@@ -50,16 +50,48 @@
     $("#store-lema").textContent = CONFIG.lema || "";
     $("#store-desc").textContent = CONFIG.descripcion || "";
     document.title = `${CONFIG.negocio} · Menú y pedidos en línea`;
+  }
 
-    const chips = [
-      ["🕗", CONFIG.horario],
-      ["📍", CONFIG.direccionTienda],
-      ["🛵", CONFIG.tiempoEntrega ? `Domicilio ${CONFIG.tiempoEntrega}` : ""],
-      ["💵", "Pagas en el local o al recibir"]
-    ].filter(([, t]) => t);
-    $("#store-chips").innerHTML = chips
-      .map(([ico, t]) => `<li><span aria-hidden="true">${ico}</span> ${esc(t)}</li>`)
-      .join("");
+  /* ---------------- Abierto / Cerrado en vivo ---------------- */
+  const DIAS = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+  const DIAS_TXT = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
+
+  // Día y minuto actuales en la zona horaria del restaurante (no la del visitante)
+  function nowAtStore() {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: CONFIG.zonaHoraria || "America/Mexico_City",
+      weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+    }).formatToParts(new Date());
+    const get = (t) => parts.find((p) => p.type === t).value;
+    const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
+    return { day, min: Number(get("hour")) * 60 + Number(get("minute")) };
+  }
+
+  function openState() {
+    const { day, min } = nowAtStore();
+    const today = CONFIG.horarios[DIAS[day]];
+    if (today && min >= toMin(today[0]) && min < toMin(today[1])) {
+      return { open: true, soon: toMin(today[1]) - min <= 30, text: `Cierra a las ${today[1]}` };
+    }
+    if (today && min < toMin(today[0])) {
+      return { open: false, text: `Abre hoy a las ${today[0]}` };
+    }
+    for (let i = 1; i <= 7; i++) {
+      const d = (day + i) % 7;
+      const h = CONFIG.horarios[DIAS[d]];
+      if (h) return { open: false, text: `Abre ${i === 1 ? "mañana" : "el " + DIAS_TXT[d]} a las ${h[0]}` };
+    }
+    return { open: false, text: "" };
+  }
+
+  function renderOpenStatus() {
+    const el = $("#open-status");
+    if (!el || !CONFIG.horarios) return;
+    const s = openState();
+    el.className = "open-status " + (s.open ? (s.soon ? "is-soon" : "is-open") : "is-closed");
+    el.innerHTML = `<span class="dot" aria-hidden="true"></span><b>${s.open ? (s.soon ? "Cierra pronto" : "Abierto ahora") : "Cerrado"}</b>${s.text ? ` · ${esc(s.text)}` : ""}`;
+    el.hidden = false;
   }
 
   // Foto del producto, o el dibujo de su categoría si no hay
@@ -131,8 +163,15 @@
   function openProduct(id) {
     const item = findItem(id);
     if (!item) return;
-    draft = { item, qty: 1, opts: {}, nota: "" };
-    (item.opciones || []).forEach((g) => { draft.opts[g.id] = g.choices[0].id; });
+    // Si ya está en el pedido, se abre en modo edición con su cantidad real
+    const line = cart.filter((l) => l.id === id).pop();
+    draft = { item, qty: line ? line.qty : 1, opts: {}, nota: line ? line.nota : "", editKey: line ? line.key : null };
+    const lineOpts = line ? (line.opts || parseKeyOpts(line.key)) : {};
+    (item.opciones || []).forEach((g) => {
+      const saved = lineOpts[g.id];
+      draft.opts[g.id] = g.choices.some((c) => c.id === saved) ? saved : g.choices[0].id;
+    });
+    const others = line ? cart.filter((l) => l.id === id && l !== line).reduce((s, l) => s + l.qty, 0) : 0;
 
     $("#product-title").textContent = item.nombre;
     $("#product-body").innerHTML = `
@@ -144,7 +183,7 @@
           <legend>${esc(g.label)}${g.required ? " *" : ""}</legend>
           ${g.choices.map((ch, i) => `
             <label class="choice choice-row">
-              <input type="radio" name="opt-${g.id}" value="${ch.id}" data-group="${g.id}"${i === 0 ? " checked" : ""}>
+              <input type="radio" name="opt-${g.id}" value="${ch.id}" data-group="${g.id}"${draft.opts[g.id] === ch.id ? " checked" : ""}>
               <span class="choice-box">
                 <b>${esc(ch.nombre)}</b>
                 ${ch.desc ? `<small>${esc(ch.desc)}</small>` : ""}
@@ -153,10 +192,11 @@
         </fieldset>`).join("")}
       <label class="field">
         <span>Nota para este producto <small>(opcional)</small></span>
-        <input type="text" id="p-note" placeholder="Ej. sin cilantro, salsa aparte">
-      </label>`;
+        <input type="text" id="p-note" value="${esc(draft.nota)}" placeholder="Ej. sin cilantro, salsa aparte">
+      </label>
+      ${others ? `<p class="muted small">Tienes ${others} más con otras opciones: ajústalas en “Mi pedido”.</p>` : ""}`;
 
-    $("#p-qty").textContent = "1";
+    $("#p-qty").textContent = draft.qty;
     updateAddBtn();
     openModal("#product-modal");
     $("#product-body").addEventListener("change", onOptChange);
@@ -169,7 +209,16 @@
 
   function updateAddBtn() {
     if (!draft) return;
-    $("#p-add").textContent = `Agregar · ${money(draft.item.precio * draft.qty)}`;
+    const price = money(draft.item.precio * draft.qty);
+    $("#p-add").textContent = !draft.editKey ? `Agregar · ${price}`
+      : draft.qty === 0 ? "Quitar del pedido"
+      : `Actualizar · ${price}`;
+  }
+
+  // Carritos guardados antes de tener `opts` en cada línea: se leen de la clave
+  function parseKeyOpts(key) {
+    try { return JSON.parse(String(key).split("|")[1]) || {}; }
+    catch { return {}; }
   }
 
   function optLabel(item, opts) {
@@ -186,25 +235,40 @@
     if (!draft) return;
     const nota = ($("#p-note")?.value || "").trim();
     const key = draft.item.id + "|" + JSON.stringify(draft.opts) + "|" + nota;
-    const found = cart.find((l) => l.key === key);
-    if (found) {
-      found.qty += draft.qty;
-    } else {
-      cart.push({
-        key,
-        id: draft.item.id,
-        nombre: draft.item.nombre,
-        precio: draft.item.precio,
-        opciones: optLabel(draft.item, draft.opts),
-        nota,
-        qty: draft.qty
-      });
+    const editing = !!draft.editKey;
+
+    // En edición, la línea original se reemplaza (o se quita si la cantidad es 0)
+    let pos = cart.length;
+    if (editing) {
+      pos = cart.findIndex((l) => l.key === draft.editKey);
+      if (pos < 0) pos = cart.length;
+      cart = cart.filter((l) => l.key !== draft.editKey);
     }
+
+    if (draft.qty > 0) {
+      const found = cart.find((l) => l.key === key);
+      if (found) {
+        found.qty += draft.qty;
+      } else {
+        cart.splice(pos, 0, {
+          key,
+          id: draft.item.id,
+          nombre: draft.item.nombre,
+          precio: draft.item.precio,
+          opts: { ...draft.opts },
+          opciones: optLabel(draft.item, draft.opts),
+          nota,
+          qty: draft.qty
+        });
+      }
+    }
+
+    const msg = !editing ? "Agregado a tu pedido" : draft.qty === 0 ? "Quitado de tu pedido" : "Pedido actualizado";
     draft = null;
     save();
     syncCart();
     closeModal("#product-modal");
-    toast("Agregado a tu pedido");
+    toast(msg);
   }
 
   /* ---------------- Carrito ---------------- */
@@ -287,9 +351,9 @@
   }
 
   const MODES = {
-    local:    { titulo: "Comer aquí",   msg: "Para comer aquí 🍽️",  pagoEn: "en el local",           cuando: "¿A qué hora llegan?" },
-    pickup:   { titulo: "Para llevar",  msg: "Para llevar 🥡",       pagoEn: "en la tienda al recoger", cuando: "¿A qué hora pasas por él?" },
-    delivery: { titulo: "A domicilio",  msg: "A domicilio 🛵",       pagoEn: "con el repartidor",     cuando: "¿Para cuándo?" }
+    local:    { titulo: "Comer aquí",   msg: "Para comer aquí",  pagoEn: "en el local",           cuando: "¿A qué hora llegan?" },
+    pickup:   { titulo: "Para llevar",  msg: "Para llevar",       pagoEn: "en la tienda al recoger", cuando: "¿A qué hora pasas por él?" },
+    delivery: { titulo: "A domicilio",  msg: "A domicilio",       pagoEn: "con el repartidor",     cuando: "¿Para cuándo?" }
   };
   const modeDef = () => MODES[info.mode] || MODES.delivery;
 
@@ -417,7 +481,7 @@
     const sep = "———————————————";
     const e = fmt.esc;
 
-    L.push(`${fmt.b("NUEVO PEDIDO " + folio)} 🌮`);
+    L.push(fmt.b("NUEVO PEDIDO " + folio));
     L.push(fmt.i(`${e(CONFIG.negocio)} · pedido desde la página`));
     L.push(sep);
     L.push(fmt.b("MI PEDIDO"));
@@ -514,7 +578,7 @@
 
     // Modal producto
     $$("[data-close-product]").forEach((b) => b.addEventListener("click", () => closeModal("#product-modal")));
-    $("#p-minus").addEventListener("click", () => { if (draft && draft.qty > 1) { draft.qty--; $("#p-qty").textContent = draft.qty; updateAddBtn(); } });
+    $("#p-minus").addEventListener("click", () => { if (draft && draft.qty > (draft.editKey ? 0 : 1)) { draft.qty--; $("#p-qty").textContent = draft.qty; updateAddBtn(); } });
     $("#p-plus").addEventListener("click", () => { if (draft) { draft.qty++; $("#p-qty").textContent = draft.qty; updateAddBtn(); } });
     $("#p-add").addEventListener("click", addDraftToCart);
 
@@ -570,6 +634,8 @@
 
   /* ---------------- Init ---------------- */
   renderStore();
+  renderOpenStatus();
+  setInterval(renderOpenStatus, 30000);
   renderCatalog();
   bind();
   syncCart();
