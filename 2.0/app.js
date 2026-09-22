@@ -34,6 +34,8 @@
 
   const allItems = () => MENU.flatMap((c) => c.items);
   const findItem = (id) => allItems().find((i) => i.id === id);
+  // Nombre actual del menú (los carritos guardados pueden tener uno viejo)
+  const lineName = (l) => (findItem(l.id) || l).nombre;
 
   /* ---------------- Portada de la tienda ---------------- */
   function renderStore() {
@@ -302,12 +304,12 @@
     box.innerHTML = cart.map((l) => `
       <article class="line" data-key="${esc(l.key)}">
         <div class="line-txt">
-          <h4>${esc(l.nombre)}</h4>
+          <h4>${esc(lineName(l))}</h4>
           ${l.opciones ? `<p class="line-opts">${esc(l.opciones)}</p>` : ""}
           ${l.nota ? `<p class="line-note">“${esc(l.nota)}”</p>` : ""}
           <b>${money(l.precio * l.qty)}</b>
         </div>
-        <div class="qty qty-sm" role="group" aria-label="Cantidad de ${esc(l.nombre)}">
+        <div class="qty qty-sm" role="group" aria-label="Cantidad de ${esc(lineName(l))}">
           <button type="button" class="qty-btn" data-act="minus" aria-label="Quitar uno">−</button>
           <span>${l.qty}</span>
           <button type="button" class="qty-btn" data-act="plus" aria-label="Agregar uno">+</button>
@@ -486,7 +488,7 @@
     L.push(sep);
     L.push(fmt.b("MI PEDIDO"));
     cart.forEach((l) => {
-      L.push(`• ${l.qty} x ${e(l.nombre)} — ${money(l.precio * l.qty)}`);
+      L.push(`• ${l.qty} x ${e(lineName(l))} — ${money(l.precio * l.qty)}`);
       if (l.opciones) L.push(`   ↳ ${e(l.opciones)}`);
       if (l.nota) L.push(`   ↳ Nota: ${e(l.nota)}`);
     });

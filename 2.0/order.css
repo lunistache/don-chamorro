@@ -2,6 +2,9 @@
    Don Chamorro 2.0 — Estilos del pedido en línea
 ------------------------------------------------------------------- */
 
+/* `hidden` siempre gana, aunque la clase defina un display (ej. .btn) */
+[hidden] { display: none !important; }
+
 /* ---------- Extras de marca ---------- */
 .btn-masa { background: var(--masa); color: var(--chile-deep); box-shadow: 0 4px 0 #c79a1f; }
 .btn-masa:hover { box-shadow: 0 6px 0 #c79a1f; }
@@ -340,6 +343,7 @@ body.modal-open { overflow: hidden; }
   background: var(--paper-2);
 }
 .modal-foot-nav .btn-outline-light { flex: 0 0 auto; }
+.modal-foot-nav .btn-block { flex: 1 1 0; min-width: 0; white-space: normal; text-align: center; line-height: 1.2; }
 
 /* ---------- Stepper ---------- */
 .stepper {
@@ -516,7 +520,9 @@ body.modal-open { overflow: hidden; }
   .choice-ico { margin-bottom: 0; font-size: 1.4rem; }
   .choice-grid-3 .choice-box b { display: block; }
   .cat-tabs { top: 60px; }
-  .modal-panel { width: 100%; max-width: none; max-height: 100vh; height: 100%; margin: 0; border-radius: 0; }
+  .modal-panel { width: 100%; max-width: none; max-height: 100vh; max-height: 100dvh; height: 100%; margin: 0; border-radius: 0; }
+  .modal-foot { gap: 8px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); }
+  .modal-foot-nav .btn { padding: .8em 1em; font-size: .95rem; }
   .modal-panel-sm { height: auto; margin: auto; border-radius: 20px; width: calc(100% - 32px); }
   .stepper { font-size: .8rem; }
   .stepper li span { display: none; }

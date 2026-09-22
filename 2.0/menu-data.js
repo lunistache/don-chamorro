@@ -120,12 +120,12 @@ const MENU = [
     img: "img/chamorro.svg",
     desc: "Chamorro entero con tortillas, salsas y verdura.",
     items: [
-      { id: "gr-2", img: "",  nombre: "Para 2 personas",  precio: 250,  desc: "1 chamorro." },
-      { id: "gr-4", img: "",  nombre: "Para 4 personas",  precio: 300,  desc: "2 chamorros." },
-      { id: "gr-6", img: "",  nombre: "Para 6 personas",  precio: 450,  desc: "3 chamorros." },
-      { id: "gr-8", img: "",  nombre: "Para 8 personas",  precio: 600,  desc: "4 chamorros." },
-      { id: "gr-10", img: "", nombre: "Para 10 personas", precio: 750,  desc: "5 chamorros." },
-      { id: "gr-15", img: "", nombre: "Para 15 personas", precio: 1200, desc: "8 chamorros." }
+      { id: "gr-2", img: "",  nombre: "Chamorro para 2 personas",  precio: 250,  desc: "1 chamorro." },
+      { id: "gr-4", img: "",  nombre: "Chamorro para 4 personas",  precio: 300,  desc: "2 chamorros." },
+      { id: "gr-6", img: "",  nombre: "Chamorro para 6 personas",  precio: 450,  desc: "3 chamorros." },
+      { id: "gr-8", img: "",  nombre: "Chamorro para 8 personas",  precio: 600,  desc: "4 chamorros." },
+      { id: "gr-10", img: "", nombre: "Chamorro para 10 personas", precio: 750,  desc: "5 chamorros." },
+      { id: "gr-15", img: "", nombre: "Chamorro para 15 personas", precio: 1200, desc: "8 chamorros." }
     ]
   },
   {
